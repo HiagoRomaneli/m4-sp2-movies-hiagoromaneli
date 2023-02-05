@@ -6,14 +6,15 @@ import {
   deleteMovies,
   updateMovies,
 } from "./functions";
+import { verifyNameExists } from "./middlewares";
 
 const app: Application = express();
 app.use(express.json());
 
-app.post("/movies", createNewMovie);
+app.post("/movies", verifyNameExists, createNewMovie);
 app.get("/movies", allMovies);
-app.patch("/movies/:id", updateMovies);
-app.delete("/movies/:id", deleteMovies);
+app.patch("/movies/:id", verifyNameExists, updateMovies);
+app.delete("/movies/:id", verifyNameExists, deleteMovies);
 
 const PORT: number = 3000;
 
