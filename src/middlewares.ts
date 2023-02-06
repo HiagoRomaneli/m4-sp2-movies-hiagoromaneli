@@ -28,9 +28,11 @@ export const verifyNameExists = async (
     queryConfigFilterId
   );
 
-  if (queryResultFilterId.rowCount <= 0) {
-    const message: string = `Movie id: ${id} not exists!`;
-    return response.status(404).json(message);
+  if (request.method === "PATCH" || request.method === "DELETE") {
+    if (queryResultFilterId.rowCount <= 0) {
+      const message: string = `Movie id: ${id} not exists!`;
+      return response.status(404).json(message);
+    }
   }
 
   const queryString: string = `
